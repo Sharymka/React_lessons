@@ -14,7 +14,7 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(messageList);
-    setmessageList(messageList.push({ message: message, author: author }));
+    setmessageList(messageList.concat({ message: message, author: author }));
     console.log(messageList);
   };
 
@@ -59,16 +59,21 @@ function App() {
       </form>
       <div className="list">
         Message List:
-        {messageList.map((message, index) => (
-          <div key={"message" + index} className="list-item">
-            <div className="text">
-              <span className="author">
-                {index + 1}. {author}: &nbsp;
-              </span>
-              "{message}"
-            </div>
-          </div>
-        ))}
+        {messageList.map(
+          (message, index) => (
+            console.log(message),
+            (
+              <div key={"message" + index} className="list-item">
+                <div className="text">
+                  <span className="author">
+                    {index + 1}. {message.author}: &nbsp;
+                  </span>
+                  "{message.message}"
+                </div>
+              </div>
+            )
+          )
+        )}
       </div>
     </>
   );
