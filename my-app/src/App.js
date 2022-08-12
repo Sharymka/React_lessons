@@ -1,13 +1,82 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
+import { useState } from "react";
 import "./App.css";
-import { MessageComponent } from "./components/message-component";
+// import Clock from "./components/Clock";
+// import FuncClock from "./components/FuncClock";
+// import MessageComponent from "./components/message-component";
+// import { useEffect } from "react";
 
 function App() {
+  const [messageList, setmessageList] = useState([]);
+  const [message, setmessage] = useState("");
+  const [author, setauthor] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(messageList);
+    setmessageList(messageList.push({ message: message, author: author }));
+    console.log(messageList);
+  };
+
+  const handleChangeM = (e) => {
+    setmessage(e.target.value);
+  };
+
+  const handleChangeA = (e) => {
+    setauthor(e.target.value);
+  };
+
   return (
-    <div className="App">
-      <MessageComponent text="Your message must be here.." />
-    </div>
+    <>
+      <form className="form" onSubmit={handleSubmit}>
+        <label className="label">
+          message:
+          <br />
+          <input
+            className="input"
+            type="text"
+            onChange={handleChangeM}
+            value={message}
+          />
+        </label>
+        <br />
+        <label className="label">
+          author:
+          <br />
+          <input
+            className="input name"
+            type="text"
+            onChange={handleChangeA}
+            value={author}
+          />
+        </label>
+        <br />
+        <label>
+          <button className="button" type="submit">
+            Send message
+          </button>
+        </label>
+      </form>
+      <div className="list">
+        Message List:
+        {messageList.map((message, index) => (
+          <div key={"message" + index} className="list-item">
+            <div className="text">
+              <span className="author">
+                {index + 1}. {author}: &nbsp;
+              </span>
+              "{message}"
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
+  // return (
+  //   <div className="App container">
+  //     <MessageComponent message="" author="" />
+  //   </div>
+  // );
 }
 
 export default App;
