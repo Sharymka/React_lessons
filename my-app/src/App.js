@@ -1,29 +1,52 @@
 // import logo from "./logo.svg";
-import { useState } from "react";
+import React from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 // import Clock from "./components/Clock";
 // import FuncClock from "./components/FuncClock";
 // import MessageComponent from "./components/message-component";
 // import { useEffect } from "react";
 
+const sentMessage = "Your message has just been sent";
+
 function App() {
-  const [messageList, setmessageList] = useState([]);
-  const [message, setmessage] = useState("");
-  const [author, setauthor] = useState("");
+  const [messageList, setMessageList] = useState([]);
+  const [message, setMessage] = useState("");
+  const [author, setAuthor] = useState("");
+  const [robotMessage, setRobotMessage] = useState("");
+
+  useEffect(() => {
+    const showMessageTimeout = setTimeout(() => {
+      setRobotMessage(messageList.length ? sentMessage : "");
+
+      clearRobotMessage(3000);
+    }, 1500);
+
+    return () => {
+      clearTimeout(showMessageTimeout);
+      setRobotMessage("");
+    };
+  }, [messageList]);
+
+  const clearRobotMessage = (timeout) => {
+    setTimeout(() => {
+      setRobotMessage("");
+    }, timeout);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(messageList);
-    setmessageList(messageList.concat({ message: message, author: author }));
+    setMessageList(messageList.concat({ message: message, author: author }));
     console.log(messageList);
   };
 
   const handleChangeM = (e) => {
-    setmessage(e.target.value);
+    setMessage(e.target.value);
   };
 
   const handleChangeA = (e) => {
-    setauthor(e.target.value);
+    setAuthor(e.target.value);
   };
 
   return (
@@ -56,6 +79,7 @@ function App() {
             Send message
           </button>
         </label>
+        <div>{robotMessage}</div>
       </form>
       <div className="list">
         Message List:
