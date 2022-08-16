@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./style.css";
+import InteractiveList from "./Mui-chat";
 
 const sentMessage = "Your message has just been sent";
 
@@ -55,6 +56,9 @@ export default function FormPropsTextFields() {
         onSubmit={handleSubmit}
         component="form"
         sx={{
+          "&:hover fieldset": {
+            borderColor: "grey",
+          },
           "& .MuiTextField-root": {
             m: 1,
             width: "25ch",
@@ -62,17 +66,22 @@ export default function FormPropsTextFields() {
           },
           "& label.Mui-focused": {
             color: "white",
+            borderColor: "transparent",
           },
           "& label": {
             color: "white",
+          },
+
+          "& .MuiInput-underline:before": {
+            borderBottomColor: "white",
           },
 
           "& .MuiInput-underline:after": {
             borderBottomColor: "white",
           },
 
-          "&:hover fieldset": {
-            borderColor: "white",
+          "& .MuiInput-root:hover": {
+            borderBottomColor: "white",
           },
         }}
         noValidate
@@ -99,7 +108,6 @@ export default function FormPropsTextFields() {
             variant="standard"
             placeholder="Your name must be here"
           />
-          <div>{robotMessage}</div>
           <Button
             style={{
               borderRadius: 5,
@@ -113,20 +121,24 @@ export default function FormPropsTextFields() {
           >
             Send message
           </Button>
+          <div className="robotM">{robotMessage}</div>
         </div>
       </Box>
-      <div className="list">
-        Message List:
-        {messageList.map((message, index) => (
-          <div key={"message" + index} className="list-item">
-            <div className="text">
-              <span className="author">
-                {index + 1}. {message.author}: &nbsp;
-              </span>
-              "{message.message}"
+      <div className="chat-list">
+        <InteractiveList />
+        <div className="list">
+          Message List:
+          {messageList.map((message, index) => (
+            <div key={"message" + index} className="list-item">
+              <div className="text">
+                <span className="author">
+                  {index + 1}. {message.author}: &nbsp;
+                </span>
+                "{message.message}"
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
