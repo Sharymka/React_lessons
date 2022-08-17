@@ -1,5 +1,5 @@
 // import * as React from "react";
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -15,6 +15,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import FolderIcon from "@mui/icons-material/Folder";
+import { useState } from "react";
 // import DeleteIcon from "@mui/icons-material/Delete";
 
 function generate(element) {
@@ -29,9 +30,18 @@ const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-export default function InteractiveList() {
+export default function InteractiveList(props) {
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
+  const [messageList, setMessageList] = useState({
+    message: "sfwf",
+    author: "srff",
+  });
+
+  useEffect(() => {
+    // console.log(messageList);
+    setMessageList(props.messageList);
+  }, [props.messageList]);
 
   return (
     <Box
@@ -78,8 +88,8 @@ export default function InteractiveList() {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    primary="Single-line item"
-                    secondary={secondary ? "Secondary text" : null}
+                    primary={messageList.author}
+                    secondary={secondary ? messageList.message : null}
                   />
                 </ListItem>
               )}

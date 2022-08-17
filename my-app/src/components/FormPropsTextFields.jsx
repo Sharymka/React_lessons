@@ -2,10 +2,15 @@ import * as React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import "./style.css";
-import InteractiveList from "./Mui-chat";
+import InteractiveList from "./InteractiveList";
+// import { ThemeProvider } from "@emotion/react";
+import BtnSendMessage from "./BtnSendMessage";
+import MessageInput from "./MessageInput";
+import AuthorInput from "./AuthorInput";
+import BtnChangeTheme from "./BtnChangeTheme";
+import RobotMessage from "./RobotMessage";
+import MessageList from "./MessageList";
 
 const sentMessage = "Your message has just been sent";
 
@@ -56,9 +61,6 @@ export default function FormPropsTextFields() {
         onSubmit={handleSubmit}
         component="form"
         sx={{
-          "&:hover fieldset": {
-            borderColor: "grey",
-          },
           "& .MuiTextField-root": {
             m: 1,
             width: "25ch",
@@ -88,57 +90,22 @@ export default function FormPropsTextFields() {
         autoComplete="off"
       >
         <div>
-          <TextField
-            className="mui-input"
-            //   required
-            onChange={handleChangeM}
-            value={message}
-            id="standard-basic"
-            label="Message"
-            variant="standard"
-            placeholder="Your message must be here"
-          />
-          <TextField
-            //   required
-            className="mui-input"
-            onChange={handleChangeA}
-            value={author}
-            id="standard-basic"
-            label="Author"
-            variant="standard"
-            placeholder="Your name must be here"
-          />
-          <Button
-            style={{
-              borderRadius: 5,
-              backgroundColor: "rgb(197, 177, 216)",
-              padding: "18px 36px",
-              fontSize: "18px",
-              marginTop: "10px",
-            }}
-            variant="contained"
-            type="submit"
-          >
-            Send message
-          </Button>
-          <div className="robotM">{robotMessage}</div>
+          <MessageInput
+            message={message}
+            handleChangeM={handleChangeM}
+          ></MessageInput>
+          <AuthorInput
+            message={author}
+            handleChangeM={handleChangeA}
+          ></AuthorInput>
+          <BtnSendMessage>Sent message</BtnSendMessage>
+          <BtnChangeTheme></BtnChangeTheme>
+          <RobotMessage robotMessage={robotMessage}></RobotMessage>
         </div>
       </Box>
       <div className="chat-list">
-        <InteractiveList />
-        <div className="list">
-          Message List:
-          {messageList.map((message, index) => (
-            <div key={"message" + index} className="list-item">
-              <div className="text">
-                <span className="author">
-                  {index + 1}. {message.author}: &nbsp;
-                </span>
-                "{message.message}"
-              </div>
-            </div>
-          ))}
-        </div>
+        <InteractiveList messageList={messageList}></InteractiveList>
+        <MessageList messageList={messageList}>Message List:</MessageList>
       </div>
     </div>
   );
