@@ -33,6 +33,7 @@ const Demo = styled("div")(({ theme }) => ({
 export default function InteractiveList(props) {
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
+  const [primary, setPrimary] = React.useState("");
   const [messageList, setMessageList] = useState([
     {
       message: "sfwf",
@@ -91,7 +92,7 @@ export default function InteractiveList(props) {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    primary="gkhgk"
+                    primary={setPrimary(message.author)}
                     secondary={secondary ? message.message : null}
                   ></ListItemText>
                 </ListItem>
