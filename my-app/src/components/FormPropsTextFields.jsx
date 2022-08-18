@@ -48,10 +48,12 @@ export default function FormPropsTextFields() {
 
   const handleChangeM = (e) => {
     setMessage(e.target.value);
+    console.log(message);
   };
 
   const handleChangeA = (e) => {
     setAuthor(e.target.value);
+    console.log(author);
   };
 
   return (
@@ -96,7 +98,7 @@ export default function FormPropsTextFields() {
           ></MessageInput>
           <AuthorInput
             message={author}
-            handleChangeM={handleChangeA}
+            handleChangeA={handleChangeA}
           ></AuthorInput>
           <BtnSendMessage>Sent message</BtnSendMessage>
           <BtnChangeTheme></BtnChangeTheme>

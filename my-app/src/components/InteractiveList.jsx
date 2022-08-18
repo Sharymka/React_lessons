@@ -33,7 +33,7 @@ const Demo = styled("div")(({ theme }) => ({
 export default function InteractiveList(props) {
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
-  const [primary, setPrimary] = React.useState("");
+  const [primary, setPrimary] = React.useState(false);
   const [messageList, setMessageList] = useState([
     {
       message: "sfwf",
@@ -44,7 +44,8 @@ export default function InteractiveList(props) {
   useEffect(() => {
     // console.log(messageList);
     setMessageList(props.messageList);
-  }, [props.messageList]);
+    messageList.length !== 0 ? setPrimary(true) : setPrimary(false);
+  }, [props.messageList, messageList.length]);
 
   return (
     <Box
@@ -83,7 +84,6 @@ export default function InteractiveList(props) {
           </Typography>
           <Demo>
             <List dense={dense}>
-              {/* {generate( */}
               {messageList.map((message, index) => (
                 <ListItem key={"message" + index} className="list-item">
                   <ListItemAvatar>
@@ -92,12 +92,11 @@ export default function InteractiveList(props) {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    primary={setPrimary(message.author)}
+                    primary={primary ? message.author : null}
                     secondary={secondary ? message.message : null}
                   ></ListItemText>
                 </ListItem>
               ))}
-              {/* )} */}
             </List>
           </Demo>
         </Grid>
