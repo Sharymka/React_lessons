@@ -18,13 +18,13 @@ import FolderIcon from "@mui/icons-material/Folder";
 import { useState } from "react";
 // import DeleteIcon from "@mui/icons-material/Delete";
 
-function generate(element) {
-  return [0, 1, 2].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    })
-  );
-}
+// function generate(element) {
+//   return [0, 1, 2].map((value) =>
+//     React.cloneElement(element, {
+//       key: value,
+//     })
+//   );
+// }
 
 const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -33,10 +33,12 @@ const Demo = styled("div")(({ theme }) => ({
 export default function InteractiveList(props) {
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
-  const [messageList, setMessageList] = useState({
-    message: "sfwf",
-    author: "srff",
-  });
+  const [messageList, setMessageList] = useState([
+    {
+      message: "sfwf",
+      author: "srff",
+    },
+  ]);
 
   useEffect(() => {
     // console.log(messageList);
@@ -80,19 +82,21 @@ export default function InteractiveList(props) {
           </Typography>
           <Demo>
             <List dense={dense}>
-              {generate(
-                <ListItem>
+              {/* {generate( */}
+              {messageList.map((message, index) => (
+                <ListItem key={"message" + index} className="list-item">
                   <ListItemAvatar>
                     <Avatar>
                       <FolderIcon />
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    primary={messageList.author}
-                    secondary={secondary ? messageList.message : null}
-                  />
+                    primary="gkhgk"
+                    secondary={secondary ? message.message : null}
+                  ></ListItemText>
                 </ListItem>
-              )}
+              ))}
+              {/* )} */}
             </List>
           </Demo>
         </Grid>
