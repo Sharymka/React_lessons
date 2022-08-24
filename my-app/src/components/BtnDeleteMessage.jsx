@@ -1,20 +1,22 @@
 import { Button } from "@mui/material";
 
-export default function BtnSendMessage(props) {
-  // const { id } = props;
+export default function BtnDeleteMessage({ id, deleteMessageList, children }) {
   return (
     <Button
       style={{
         borderRadius: 5,
         backgroundColor: "rgb(197, 177, 216)",
-        padding: "18px 36px",
-        fontSize: "18px",
+        padding: "5px 7px",
+        fontSize: "14px",
         marginTop: "10px",
+      }}
+      onClick={() => {
+        deleteMessageList(id);
       }}
       variant="contained"
       type="submit"
     >
-      {props.children}
+      {children}
     </Button>
   );
 }

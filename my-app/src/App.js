@@ -1,41 +1,102 @@
-// import logo from "./logo.svg";
 import React from "react";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
-// import { useEffect, useState } from "react";
+// import { createTheme } from "@mui/material";
+import { Redirect, BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
-// import FormPropsTextFields from "./components/FormPropsTextFields";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import { useState } from "react";
+import { useState } from "react";
 import HomePage from "./components/HomePage";
-import ChatPage from "./components/ChatPage";
+import ChatsPage from "./components/ChatPage";
 import ProfilePage from "./components/ProfilePage";
+import ThemeProvider from "./components/ThemeProvider";
+// import BtnChangeTheme from "./components/BtnChangeTheme";
+// const darkTheme = createTheme({ palette: { mode: "dark" } });
 
 function App() {
+  const [chats, setChats] = useState({
+    1: {
+      id: 1,
+      title: "chat 1",
+      messageList: [],
+    },
+    2: {
+      id: 2,
+      title: "chat 2",
+      messageList: [],
+    },
+    3: {
+      id: 3,
+      title: "chat 3",
+      messageList: [],
+    },
+  });
+
+  const addMessageList = (id, post) => {
+    const currentMessageList = [...chats[id].messageList, post];
+
+    const currentChat = { ...chats[id], messageList: currentMessageList };
+    console.log(currentChat, id);
+
+    setChats({ ...chats, [id]: currentChat });
+  };
+
+  const deleteMessageList = (id) => {
+    const currentChat = { ...chats[id], messageList: [] };
+    setChats({ ...chats, [id]: currentChat });
+  };
+
   return (
-    <BrowserRouter>
-      <header>
-        <Link to="/">Home</Link>
-        <ul>
-          <li>
-            <Link to="/chat">Chat</Link>
-          </li>
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
-        </ul>
-      </header>
-      <Switch>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-        <Route path="/chat">
-          <ChatPage />
-        </Route>
-        <Route path="/profile">
-          <ProfilePage />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <header>
+          <Link to="/">Home</Link>
+          <ul>
+            <li>
+              <Link to="/chat">Chat</Link>
+              <ul>
+                {Object.values(chats).map((chat) => {
+                  return (
+                    <li key={chat.id}>
+                      {<Link to={`/chat/${chat.id}`}>Chat {chat.id}</Link>}
+                    </li>
+                  );
+                })}
+              </ul>
+            </li>
+            <li>
+              <Link to="/profile">Profile</Link>
+            </li>
+          </ul>
+        </header>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route
+            path="/chat/:id"
+            render={(data) => {
+              const id = data.match.params.id;
+              const shouldRedirect = Object.keys(chats).every(
+                (key) => key !== id
+              );
+              if (shouldRedirect) {
+                return <Redirect to="/" />;
+              }
+
+              return (
+                <ChatsPage
+                  addMessageList={addMessageList}
+                  deleteMessageList={deleteMessageList}
+                  id={id}
+                  chats={chats}
+                ></ChatsPage>
+              );
+            }}
+          />
+          <Route path="/profile">
+            <ProfilePage />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 export default App;

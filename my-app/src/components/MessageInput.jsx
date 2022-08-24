@@ -1,12 +1,12 @@
 import { TextField } from "@mui/material";
 
-export default function MessageInput(props) {
+export default function MessageInput({ value, onChange }) {
   return (
     <TextField
       className="mui-input"
       required
-      onChange={props.handleChangeM}
-      value={props.message}
+      onChange={onChange}
+      value={value}
       id="standard-basic"
       label="Message"
       variant="standard"

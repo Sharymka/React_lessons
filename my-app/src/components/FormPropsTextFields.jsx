@@ -1,6 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import "./style.css";
 import InteractiveList from "./InteractiveList";
@@ -10,19 +8,17 @@ import MessageInput from "./MessageInput";
 import AuthorInput from "./AuthorInput";
 import BtnChangeTheme from "./BtnChangeTheme";
 import RobotMessage from "./RobotMessage";
-import MessageList from "./MessageList";
 
 const sentMessage = "Your message has just been sent";
 
-export default function FormPropsTextFields() {
-  const [messageList, setMessageList] = useState([]);
-  const [message, setMessage] = useState("");
-  const [author, setAuthor] = useState("");
+export default function FormPropsTextFields(props) {
+  const { id, deleteMessageList, addMessageList, chats } = props;
+  const [post, setPost] = useState({});
   const [robotMessage, setRobotMessage] = useState("");
 
   useEffect(() => {
     const showMessageTimeout = setTimeout(() => {
-      setRobotMessage(messageList.length ? sentMessage : "");
+      setRobotMessage(Object.keys(post).length !== 0 ? sentMessage : "");
 
       clearRobotMessage(3000);
     }, 1500);
@@ -31,7 +27,7 @@ export default function FormPropsTextFields() {
       clearTimeout(showMessageTimeout);
       setRobotMessage("");
     };
-  }, [messageList]);
+  }, [post]);
 
   const clearRobotMessage = (timeout) => {
     setTimeout(() => {
@@ -41,25 +37,31 @@ export default function FormPropsTextFields() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(messageList);
-    setMessageList(messageList.concat({ message: message, author: author }));
-    console.log(messageList);
+    // console.log(e);
+    // console.log("сообщение");
+    // console.log(message);
+    // setPost((previous) => ({
+    //   ...previous,
+    //   message: ,
+    // }));
+    // console.log(post);
+
+    addMessageList(id, post);
+    // console.log(post);
   };
 
-  const handleChangeM = (e) => {
-    setMessage(e.target.value);
-    console.log(message);
+  const onChangeMessage = (e) => {
+    setPost({ ...post, message: e.target.value });
   };
 
-  const handleChangeA = (e) => {
-    setAuthor(e.target.value);
-    console.log(author);
+  const onChangeAuthor = (e) => {
+    setPost({ ...post, author: e.target.value });
   };
 
   return (
     <div className="container">
       <Box
-        className="mui-form "
+        className="mui-form"
         onSubmit={handleSubmit}
         component="form"
         sx={{
@@ -92,22 +94,29 @@ export default function FormPropsTextFields() {
         autoComplete="off"
       >
         <div>
-          <MessageInput
-            message={message}
-            handleChangeM={handleChangeM}
-          ></MessageInput>
-          <AuthorInput
-            message={author}
-            handleChangeA={handleChangeA}
-          ></AuthorInput>
-          <BtnSendMessage>Sent message</BtnSendMessage>
-          <BtnChangeTheme></BtnChangeTheme>
+          <div>chat №{props.id}</div>
+          <MessageInput value={post.message} onChange={onChangeMessage} />
+          <AuthorInput value={post.author} onChange={onChangeAuthor} />
+          <BtnSendMessage id={id}>Sent message</BtnSendMessage>
+          <BtnChangeTheme />
           <RobotMessage robotMessage={robotMessage}></RobotMessage>
         </div>
       </Box>
       <div className="chat-list">
-        <InteractiveList messageList={messageList}></InteractiveList>
-        <MessageList messageList={messageList}>Message List:</MessageList>
+        <InteractiveList
+          deleteMessageList={deleteMessageList}
+          id={id}
+          chats={chats}
+        ></InteractiveList>
+        {/* <MessageList
+          post={post}
+          addMessageList={addMessageList}
+          deleteMessageList={deleteMessageList}
+          chats={chats}
+          id={id}
+        >
+          Message List:
+        </MessageList> */}
       </div>
     </div>
   );
