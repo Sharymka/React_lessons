@@ -3,12 +3,10 @@ import React from "react";
 import { Redirect, BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import { useState } from "react";
-import HomePage from "./components/HomePage";
-import ChatsPage from "./components/ChatPage";
-import ProfilePage from "./components/ProfilePage";
+import HomePage from "./components/pages/HomePage";
+import ChatsPage from "./components/pages/ChatPage";
+import ProfilePage from "./components/pages/ProfilePage";
 import ThemeProvider from "./components/ThemeProvider";
-// import BtnChangeTheme from "./components/BtnChangeTheme";
-// const darkTheme = createTheme({ palette: { mode: "dark" } });
 
 function App() {
   const [chats, setChats] = useState({

@@ -3,7 +3,7 @@ import { TextField } from "@mui/material";
 export default function AuthorInput({ value, onChange }) {
   return (
     <TextField
-      // required
+      required
       className="mui-input"
       onChange={onChange}
       value={value}

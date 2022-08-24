@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import { useToggleModeServices } from "./UseToggleModeServices";
+import { useToggleModeServices } from "./hooks/UseToggleModeServices";
 import { useTheme } from "@emotion/react";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Brightness4Icon from "@mui/icons-material/Brightness4";

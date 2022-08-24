@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import "./style.css";
 import InteractiveList from "./InteractiveList";
-// import { ThemeProvider } from "@emotion/react";
 import BtnSendMessage from "./BtnSendMessage";
 import MessageInput from "./MessageInput";
 import AuthorInput from "./AuthorInput";
@@ -13,6 +12,8 @@ const sentMessage = "Your message has just been sent";
 
 export default function FormPropsTextFields(props) {
   const { id, deleteMessageList, addMessageList, chats } = props;
+  const [message, setMessage] = useState("");
+  const [author, setAuthor] = useState("");
   const [post, setPost] = useState({});
   const [robotMessage, setRobotMessage] = useState("");
 
@@ -34,28 +35,24 @@ export default function FormPropsTextFields(props) {
       setRobotMessage("");
     }, timeout);
   };
+  // const add = () => {
+  //   setTimeout(() => {
+  //     addMessageList(id, post);
+  //   }, 0);
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(e);
-    // console.log("сообщение");
-    // console.log(message);
-    // setPost((previous) => ({
-    //   ...previous,
-    //   message: ,
-    // }));
-    // console.log(post);
-
-    addMessageList(id, post);
-    // console.log(post);
+    setPost({ ...post, message: message, author: author });
+    addMessageList(id, { message, author });
   };
 
   const onChangeMessage = (e) => {
-    setPost({ ...post, message: e.target.value });
+    setMessage(e.target.value);
   };
 
   const onChangeAuthor = (e) => {
-    setPost({ ...post, author: e.target.value });
+    setAuthor(e.target.value);
   };
 
   return (
@@ -95,8 +92,8 @@ export default function FormPropsTextFields(props) {
       >
         <div>
           <div>chat №{props.id}</div>
-          <MessageInput value={post.message} onChange={onChangeMessage} />
-          <AuthorInput value={post.author} onChange={onChangeAuthor} />
+          <MessageInput value={message} onChange={onChangeMessage} />
+          <AuthorInput value={author} onChange={onChangeAuthor} />
           <BtnSendMessage id={id}>Sent message</BtnSendMessage>
           <BtnChangeTheme />
           <RobotMessage robotMessage={robotMessage}></RobotMessage>
@@ -108,15 +105,6 @@ export default function FormPropsTextFields(props) {
           id={id}
           chats={chats}
         ></InteractiveList>
-        {/* <MessageList
-          post={post}
-          addMessageList={addMessageList}
-          deleteMessageList={deleteMessageList}
-          chats={chats}
-          id={id}
-        >
-          Message List:
-        </MessageList> */}
       </div>
     </div>
   );

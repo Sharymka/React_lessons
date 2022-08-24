@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
 
 export default function BtnSendMessage(props) {
-  // const { id } = props;
   return (
     <Button
       style={{
