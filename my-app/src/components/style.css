@@ -85,6 +85,11 @@
     gap: 10px;
  }
 
+ .checkbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+ }
 
 
 
