@@ -1,12 +1,12 @@
 import { TextField } from "@mui/material";
 
-export default function AuthorInput(props) {
+export default function AuthorInput({ value, onChange }) {
   return (
     <TextField
-      // required
+      required
       className="mui-input"
-      onChange={props.handleChangeA}
-      value={props.author}
+      onChange={onChange}
+      value={value}
       id="standard-basic"
       label="Author"
       variant="standard"
